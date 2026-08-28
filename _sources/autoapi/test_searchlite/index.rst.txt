@@ -1,0 +1,176 @@
+test_searchlite
+===============
+
+.. py:module:: test_searchlite
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   test_searchlite.CONF
+   test_searchlite.INDEX_MD
+   test_searchlite.GUIDE_MD
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   test_searchlite.TestIndex
+   test_searchlite.TestAssets
+   test_searchlite.TestUiDisabled
+   test_searchlite.TestCustomFilename
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   test_searchlite._build
+   test_searchlite.built
+   test_searchlite.records
+
+
+Module Contents
+---------------
+
+.. py:data:: CONF
+   :value: Multiline-String
+
+   .. raw:: html
+
+      <details><summary>Show Value</summary>
+
+   .. code-block:: python
+
+      """
+      extensions = ["myst_parser", "sphinx_searchlite"]
+      project = "Demo"
+      html_theme = "basic"
+      """
+
+   .. raw:: html
+
+      </details>
+
+
+
+.. py:data:: INDEX_MD
+   :value: Multiline-String
+
+   .. raw:: html
+
+      <details><summary>Show Value</summary>
+
+   .. code-block:: python
+
+      """
+      # Demo
+      
+      Intro text.
+      
+      ```{toctree}
+      
+      guide
+      ```
+      """
+
+   .. raw:: html
+
+      </details>
+
+
+
+.. py:data:: GUIDE_MD
+   :value: Multiline-String
+
+   .. raw:: html
+
+      <details><summary>Show Value</summary>
+
+   .. code-block:: python
+
+      """
+      # Guide
+      
+      ## First section
+      
+      Content about widgets.
+      
+      ### Nested heading
+      
+      More detail.
+      
+      ## Second section
+      
+      Other content.
+      """
+
+   .. raw:: html
+
+      </details>
+
+
+
+.. py:function:: _build(tmp_path_factory, conf: str, name: str) -> pathlib.Path
+
+.. py:function:: built(tmp_path_factory) -> pathlib.Path
+
+.. py:function:: records(built) -> list[dict]
+
+.. py:class:: TestIndex
+
+   .. py:method:: test_index_is_emitted(built)
+
+
+   .. py:method:: test_page_records_carry_url_title_and_text(records)
+
+
+   .. py:method:: test_sections_get_their_own_anchored_record(records)
+
+
+   .. py:method:: test_section_text_excludes_nested_sections(records)
+
+
+   .. py:method:: test_page_title_is_not_duplicated_as_a_section(records)
+
+
+   .. py:method:: test_text_is_truncated_to_the_configured_limit(tmp_path_factory)
+
+
+.. py:class:: TestAssets
+
+   .. py:method:: test_engine_is_linked_with_the_index_name(built)
+
+
+   .. py:method:: test_bundled_ui_is_shipped_by_default(built)
+
+
+.. py:class:: TestUiDisabled
+
+   .. py:method:: built(tmp_path_factory) -> pathlib.Path
+      :classmethod:
+
+
+
+   .. py:method:: test_engine_is_still_shipped(built)
+
+
+   .. py:method:: test_dialog_and_styles_are_omitted(built)
+
+
+   .. py:method:: test_ui_assets_are_not_copied(built)
+
+
+   .. py:method:: test_index_is_still_emitted(built)
+
+
+.. py:class:: TestCustomFilename
+
+   .. py:method:: test_index_name_is_configurable(tmp_path_factory)
+
+

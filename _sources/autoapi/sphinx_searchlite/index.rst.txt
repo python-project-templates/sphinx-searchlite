@@ -1,0 +1,62 @@
+sphinx_searchlite
+=================
+
+.. py:module:: sphinx_searchlite
+
+.. autoapi-nested-parse::
+
+   Client-side documentation search for any Sphinx theme.
+
+   Emits a small JSON index next to the build and ships a dependency-free BM25
+   engine to score it in the browser. Themes can either use the bundled dialog or
+   drive ``window.SearchLite`` themselves.
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/sphinx_searchlite/_index/index
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   sphinx_searchlite.STATIC_DIR
+   sphinx_searchlite.ENGINE_DIR
+   sphinx_searchlite.UI_DIR
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   sphinx_searchlite.collect_records
+   sphinx_searchlite.setup
+
+
+Package Contents
+----------------
+
+.. py:function:: collect_records(app, pagename: str, doctree: docutils.nodes.document) -> list[dict[str, str]]
+
+   Return one record for the page plus one per addressable section.
+
+   Keys are short because the index ships to the browser: ``u`` url, ``t`` page
+   title, ``s`` section heading, ``x`` text.
+
+
+.. py:data:: STATIC_DIR
+
+.. py:data:: ENGINE_DIR
+
+.. py:data:: UI_DIR
+
+.. py:function:: setup(app) -> dict[str, object]
+

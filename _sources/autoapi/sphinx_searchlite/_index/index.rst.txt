@@ -1,0 +1,37 @@
+sphinx_searchlite._index
+========================
+
+.. py:module:: sphinx_searchlite._index
+
+.. autoapi-nested-parse::
+
+   Build the client-side search index.
+
+   Sphinx's own ``searchindex.js`` is coupled to ``searchtools.js`` and its
+   dedicated ``search.html`` page. This emits plain records any front end can
+   score itself, keyed so that section anchors survive incremental builds.
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   sphinx_searchlite._index.collect_records
+   sphinx_searchlite._index.setup_index
+
+
+Module Contents
+---------------
+
+.. py:function:: collect_records(app, pagename: str, doctree: docutils.nodes.document) -> list[dict[str, str]]
+
+   Return one record for the page plus one per addressable section.
+
+   Keys are short because the index ships to the browser: ``u`` url, ``t`` page
+   title, ``s`` section heading, ``x`` text.
+
+
+.. py:function:: setup_index(app) -> None
+
