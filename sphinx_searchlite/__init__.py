@@ -10,7 +10,7 @@ from pathlib import Path
 from ._index import collect_records, setup_index
 
 __all__ = ("ENGINE_DIR", "STATIC_DIR", "UI_DIR", "collect_records", "setup")
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 STATIC_DIR = Path(__file__).parent / "static"
 ENGINE_DIR = STATIC_DIR / "engine"
