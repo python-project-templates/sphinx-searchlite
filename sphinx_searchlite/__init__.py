@@ -32,7 +32,11 @@ def _on_builder_inited(app) -> None:
     )
     if app.config.searchlite_ui:
         app.config.html_static_path.append(str(UI_DIR))
-        app.add_js_file("searchlite-ui.js", loading_method="defer")
+        app.add_js_file(
+            "searchlite-ui.js",
+            loading_method="defer",
+            **{"data-searchlite-adopt": "true" if app.config.searchlite_adopt_theme_search else "false"},
+        )
         app.add_css_file("searchlite.css")
 
 
@@ -40,6 +44,7 @@ def setup(app) -> dict[str, object]:
     app.add_config_value("searchlite_index_filename", "searchlite-index.json", "html")
     app.add_config_value("searchlite_max_text", 1200, "html")
     app.add_config_value("searchlite_ui", True, "html")
+    app.add_config_value("searchlite_adopt_theme_search", True, "html")
     app.connect("builder-inited", _on_builder_inited)
     setup_index(app)
     return {

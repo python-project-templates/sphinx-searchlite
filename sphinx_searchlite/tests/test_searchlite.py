@@ -117,6 +117,26 @@ class TestUiDisabled:
         assert (built / "_static" / "searchlite-index.json").is_file()
 
 
+class TestThemeSearchAdoption:
+    def test_adoption_is_advertised_to_the_ui_script(self, built):
+        assert 'data-searchlite-adopt="true"' in (built / "guide.html").read_text()
+
+    def test_adoption_can_be_switched_off(self, tmp_path_factory):
+        out = _build(tmp_path_factory, CONF + "\nsearchlite_adopt_theme_search = False\n", "src_no_adopt")
+        assert 'data-searchlite-adopt="false"' in (out / "guide.html").read_text()
+
+    def test_styles_no_longer_hardcode_a_dark_palette(self, built):
+        css = (built / "_static" / "searchlite.css").read_text()
+        # Colours are adopted from the host page instead, since themes signal
+        # dark mode with their own class rather than the media query.
+        assert "@media (prefers-color-scheme" not in css
+
+    def test_palette_derives_from_two_variables(self, built):
+        css = (built / "_static" / "searchlite.css").read_text()
+        for name in ("--searchlite-muted", "--searchlite-border", "--searchlite-accent"):
+            assert f"{name}: color-mix(" in css
+
+
 class TestCustomFilename:
     def test_index_name_is_configurable(self, tmp_path_factory):
         out = _build(tmp_path_factory, CONF + '\nsearchlite_index_filename = "docs-index.json"\n', "src_named")
