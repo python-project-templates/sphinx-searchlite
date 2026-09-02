@@ -22,6 +22,7 @@ Classes
    test_searchlite.TestIndex
    test_searchlite.TestAssets
    test_searchlite.TestUiDisabled
+   test_searchlite.TestThemeSearchAdoption
    test_searchlite.TestCustomFilename
 
 
@@ -167,6 +168,20 @@ Module Contents
 
 
    .. py:method:: test_index_is_still_emitted(built)
+
+
+.. py:class:: TestThemeSearchAdoption
+
+   .. py:method:: test_adoption_is_advertised_to_the_ui_script(built)
+
+
+   .. py:method:: test_adoption_can_be_switched_off(tmp_path_factory)
+
+
+   .. py:method:: test_styles_no_longer_hardcode_a_dark_palette(built)
+
+
+   .. py:method:: test_palette_derives_from_two_variables(built)
 
 
 .. py:class:: TestCustomFilename

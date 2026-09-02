@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
-        <title>sphinx_searchlite - sphinx-searchlite v0.1.0</title>
+        <title>sphinx_searchlite - sphinx-searchlite v0.2.0</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -166,7 +166,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">sphinx-searchlite <code style='font-size: var(--font-size--small--4);color: var(--sd-color-primary);'>v0.1.0</code></div></a>
+      <a href="../index.html"><div class="brand">sphinx-searchlite <code style='font-size: var(--font-size--small--4);color: var(--sd-color-primary);'>v0.2.0</code></div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -187,7 +187,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
-  <span class="sidebar-brand-text">sphinx-searchlite <code style='font-size: var(--font-size--small--4);color: var(--sd-color-primary);'>v0.1.0</code></span>
+  <span class="sidebar-brand-text">sphinx-searchlite <code style='font-size: var(--font-size--small--4);color: var(--sd-color-primary);'>v0.2.0</code></span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -271,7 +271,11 @@
     <span class="p">)</span>
     <span class="k">if</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">searchlite_ui</span><span class="p">:</span>
         <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">html_static_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">UI_DIR</span><span class="p">))</span>
-        <span class="n">app</span><span class="o">.</span><span class="n">add_js_file</span><span class="p">(</span><span class="s2">"searchlite-ui.js"</span><span class="p">,</span> <span class="n">loading_method</span><span class="o">=</span><span class="s2">"defer"</span><span class="p">)</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">add_js_file</span><span class="p">(</span>
+            <span class="s2">"searchlite-ui.js"</span><span class="p">,</span>
+            <span class="n">loading_method</span><span class="o">=</span><span class="s2">"defer"</span><span class="p">,</span>
+            <span class="o">**</span><span class="p">{</span><span class="s2">"data-searchlite-adopt"</span><span class="p">:</span> <span class="s2">"true"</span> <span class="k">if</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">searchlite_adopt_theme_search</span> <span class="k">else</span> <span class="s2">"false"</span><span class="p">},</span>
+        <span class="p">)</span>
         <span class="n">app</span><span class="o">.</span><span class="n">add_css_file</span><span class="p">(</span><span class="s2">"searchlite.css"</span><span class="p">)</span>
 
 
@@ -281,6 +285,7 @@
     <span class="n">app</span><span class="o">.</span><span class="n">add_config_value</span><span class="p">(</span><span class="s2">"searchlite_index_filename"</span><span class="p">,</span> <span class="s2">"searchlite-index.json"</span><span class="p">,</span> <span class="s2">"html"</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">add_config_value</span><span class="p">(</span><span class="s2">"searchlite_max_text"</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">"html"</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">add_config_value</span><span class="p">(</span><span class="s2">"searchlite_ui"</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"html"</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_config_value</span><span class="p">(</span><span class="s2">"searchlite_adopt_theme_search"</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"html"</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"builder-inited"</span><span class="p">,</span> <span class="n">_on_builder_inited</span><span class="p">)</span>
     <span class="n">setup_index</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">{</span>
@@ -321,7 +326,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=01f34227"></script>
+</div><script src="../_static/documentation_options.js?v=938c9ccc"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
