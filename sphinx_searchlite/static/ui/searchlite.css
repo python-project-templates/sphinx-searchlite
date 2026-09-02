@@ -1,34 +1,34 @@
 /*!
  * sphinx-searchlite — styling for the bundled dialog.
  *
- * Deliberately neutral so it sits acceptably on any theme. Every colour comes
- * from a `--searchlite-*` variable, so a theme can restyle it by redefining
- * those rather than overriding rules.
+ * The dialog adopts the host page's own colours at runtime (see searchlite-ui.js),
+ * so it follows whatever light/dark mechanism the theme uses rather than relying
+ * on `prefers-color-scheme`, which themes with their own toggle do not track.
+ * The values below are only the fallback for when that lookup fails.
+ *
+ * Every colour derives from `--searchlite-background` and
+ * `--searchlite-foreground`, so overriding those two restyles the whole dialog.
  */
 
 :root {
   --searchlite-background: #fff;
   --searchlite-foreground: #18181b;
-  --searchlite-muted: #71717a;
-  --searchlite-border: #e4e4e7;
-  --searchlite-accent: #f4f4f5;
   --searchlite-radius: 0.75rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --searchlite-background: #18181b;
-    --searchlite-foreground: #fafafa;
-    --searchlite-muted: #a1a1aa;
-    --searchlite-border: #27272a;
-    --searchlite-accent: #27272a;
-  }
+#searchlite-dialog {
+  --searchlite-muted: color-mix(in srgb, var(--searchlite-foreground) 60%, transparent);
+  --searchlite-border: color-mix(in srgb, var(--searchlite-foreground) 20%, transparent);
+  --searchlite-accent: color-mix(in srgb, var(--searchlite-foreground) 10%, transparent);
 }
 
 #searchlite-dialog {
   width: min(40rem, calc(100vw - 2rem));
   max-height: min(28rem, calc(100vh - 6rem));
+  /* Stated rather than left to the user-agent default, which resets in themes
+     that zero out `dialog` margins and would pin the dialog to the left edge. */
   margin-top: 4rem;
+  margin-inline: auto;
   padding: 0;
   border: 1px solid var(--searchlite-border);
   border-radius: var(--searchlite-radius);
@@ -40,6 +40,11 @@
 
 #searchlite-dialog::backdrop {
   background: rgb(0 0 0 / 0.5);
+}
+
+/* Sits above the theme's own search field once that field has been adopted. */
+.searchlite-adopted {
+  cursor: pointer;
 }
 
 .searchlite-panel {

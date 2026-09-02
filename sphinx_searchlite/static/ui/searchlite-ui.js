@@ -11,6 +11,10 @@
 
   if (!window.SearchLite || !window.SearchLite.indexUrl) return;
 
+  // Captured while the script is executing; `currentScript` is null later on.
+  var uiScript = document.currentScript || document.querySelector("script[data-searchlite-adopt]");
+  var adoptThemeSearch = !uiScript || uiScript.getAttribute("data-searchlite-adopt") !== "false";
+
   var engine = window.SearchLite.create({ url: window.SearchLite.indexUrl });
   var selected = 0;
 
@@ -30,6 +34,36 @@
   var input = dialog.querySelector("#searchlite-input");
   var results = dialog.querySelector("#searchlite-results");
   var empty = dialog.querySelector("#searchlite-empty");
+
+  /* Colour adoption ------------------------------------------------------ */
+
+  // Themes signal dark mode with their own class or attribute, not
+  // `prefers-color-scheme`, so read the page's actual colours instead. The
+  // computed value is assigned verbatim: it may be `color(display-p3 ...)` or
+  // any other modern syntax, and parsing it would lose that.
+  function backdropColour() {
+    var node = document.body;
+    while (node) {
+      var colour = getComputedStyle(node).backgroundColor;
+      if (colour && colour !== "transparent" && colour.indexOf("rgba(0, 0, 0, 0") !== 0) return colour;
+      node = node.parentElement;
+    }
+    return null;
+  }
+
+  function adoptColours() {
+    var background = backdropColour();
+    var foreground = getComputedStyle(document.body).color;
+    if (background) dialog.style.setProperty("--searchlite-background", background);
+    if (foreground) dialog.style.setProperty("--searchlite-foreground", foreground);
+  }
+
+  // Theme toggles mutate a class or attribute on <html> or <body>.
+  var themeWatcher = new MutationObserver(adoptColours);
+  [document.documentElement, document.body].forEach(function (node) {
+    themeWatcher.observe(node, { attributes: true, attributeFilter: ["class", "data-theme", "data-mode", "style"] });
+  });
+  adoptColours();
 
   function render(found) {
     results.replaceChildren();
@@ -77,6 +111,7 @@
 
   function open() {
     if (dialog.open) return;
+    adoptColours();
     dialog.showModal();
     engine.load().then(update);
     input.focus();
@@ -86,6 +121,41 @@
   document.querySelectorAll("[data-searchlite-open]").forEach(function (trigger) {
     trigger.addEventListener("click", open);
   });
+
+  /* Adopting the theme's own search box ---------------------------------- */
+
+  // Without this the dialog has no visible entry point on a theme that knows
+  // nothing about it, and the theme's box still leads to Sphinx's separate
+  // search page — two searches with different results.
+  function adoptSearchFields() {
+    if (!adoptThemeSearch) return;
+    var selectors = [
+      'input[name="q"]',
+      'form[action$="search.html"] input',
+      'form[role="search"] input',
+      "input[type=search]",
+    ];
+    var seen = new Set();
+    selectors.forEach(function (selector) {
+      document.querySelectorAll(selector).forEach(function (field) {
+        if (field === input || seen.has(field)) return;
+        seen.add(field);
+        field.classList.add("searchlite-adopted");
+        field.readOnly = true;
+        field.addEventListener("focus", open);
+        field.addEventListener("click", open);
+        var form = field.closest("form");
+        if (form) {
+          form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            open();
+          });
+        }
+      });
+    });
+  }
+
+  adoptSearchFields();
 
   input.addEventListener("input", function () {
     engine.load().then(update);
