@@ -22,6 +22,7 @@ Classes
    test_searchlite.TestIndex
    test_searchlite.TestAssets
    test_searchlite.TestUiDisabled
+   test_searchlite.TestResultLinks
    test_searchlite.TestThemeSearchAdoption
    test_searchlite.TestCustomFilename
 
@@ -170,12 +171,23 @@ Module Contents
    .. py:method:: test_index_is_still_emitted(built)
 
 
+.. py:class:: TestResultLinks
+
+   .. py:method:: test_urls_resolve_against_the_documentation_root(built)
+
+
 .. py:class:: TestThemeSearchAdoption
 
    .. py:method:: test_adoption_is_advertised_to_the_ui_script(built)
 
 
    .. py:method:: test_adoption_can_be_switched_off(tmp_path_factory)
+
+
+   .. py:method:: test_adopted_fields_do_not_reopen_the_dialog_on_focus(built)
+
+
+   .. py:method:: test_escape_closes_the_dialog_on_the_first_press(built)
 
 
    .. py:method:: test_styles_no_longer_hardcode_a_dark_palette(built)
