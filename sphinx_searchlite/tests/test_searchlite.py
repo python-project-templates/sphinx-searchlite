@@ -144,6 +144,12 @@ class TestThemeSearchAdoption:
         # `<input type=search>` eats the first Escape to clear itself.
         assert 'event.key === "Escape"' in js
 
+    def test_click_away_ignores_presses_that_began_inside_the_panel(self, built):
+        js = (built / "_static" / "searchlite-ui.js").read_text()
+        # Releasing outside the panel targets the dialog, so selecting a query
+        # by dragging past the field's edge would otherwise dismiss it.
+        assert "pressedBackdrop && event.target === dialog" in js
+
     def test_styles_no_longer_hardcode_a_dark_palette(self, built):
         css = (built / "_static" / "searchlite.css").read_text()
         # Colours are adopted from the host page instead, since themes signal

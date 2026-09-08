@@ -189,8 +189,17 @@
     }
   });
 
+  // Releasing outside the panel still targets the dialog, so a query selected
+  // by dragging past the field's edge would dismiss it. Require the press to
+  // have landed on the backdrop too.
+  var pressedBackdrop = false;
+
+  dialog.addEventListener("mousedown", function (event) {
+    pressedBackdrop = event.target === dialog;
+  });
+
   dialog.addEventListener("click", function (event) {
-    if (event.target === dialog) dialog.close();
+    if (pressedBackdrop && event.target === dialog) dialog.close();
   });
 
   document.addEventListener("keydown", function (event) {
