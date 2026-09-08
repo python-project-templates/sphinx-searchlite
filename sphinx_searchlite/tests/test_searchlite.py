@@ -117,6 +117,14 @@ class TestUiDisabled:
         assert (built / "_static" / "searchlite-index.json").is_file()
 
 
+class TestResultLinks:
+    def test_urls_resolve_against_the_documentation_root(self, built):
+        js = (built / "_static" / "searchlite.js").read_text()
+        # Records store root-relative urls, so a page nested below the root
+        # would otherwise resolve them against its own directory.
+        assert 'new URL("../", new URL(url, document.baseURI))' in js
+
+
 class TestThemeSearchAdoption:
     def test_adoption_is_advertised_to_the_ui_script(self, built):
         assert 'data-searchlite-adopt="true"' in (built / "guide.html").read_text()
@@ -124,6 +132,17 @@ class TestThemeSearchAdoption:
     def test_adoption_can_be_switched_off(self, tmp_path_factory):
         out = _build(tmp_path_factory, CONF + "\nsearchlite_adopt_theme_search = False\n", "src_no_adopt")
         assert 'data-searchlite-adopt="false"' in (out / "guide.html").read_text()
+
+    def test_adopted_fields_do_not_reopen_the_dialog_on_focus(self, built):
+        js = (built / "_static" / "searchlite-ui.js").read_text()
+        # Closing the dialog restores focus to the field that opened it, so an
+        # opener bound to `focus` would reopen it and trap the reader.
+        assert 'field.addEventListener("focus", open)' not in js
+
+    def test_escape_closes_the_dialog_on_the_first_press(self, built):
+        js = (built / "_static" / "searchlite-ui.js").read_text()
+        # `<input type=search>` eats the first Escape to clear itself.
+        assert 'event.key === "Escape"' in js
 
     def test_styles_no_longer_hardcode_a_dark_palette(self, built):
         css = (built / "_static" / "searchlite.css").read_text()
