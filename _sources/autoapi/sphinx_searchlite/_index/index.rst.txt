@@ -27,7 +27,7 @@ Module Contents
 
 .. py:function:: collect_records(app, pagename: str, doctree: docutils.nodes.document) -> list[dict[str, str]]
 
-   Return one record for the page plus one per addressable section.
+   Return one record for the page plus one per addressable section and object description.
 
    Keys are short because the index ships to the browser: ``u`` url, ``t`` page
    title, ``s`` section heading, ``x`` text.

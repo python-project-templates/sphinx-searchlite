@@ -12,6 +12,7 @@ Attributes
    test_searchlite.CONF
    test_searchlite.INDEX_MD
    test_searchlite.GUIDE_MD
+   test_searchlite.API_RST
 
 
 Classes
@@ -25,6 +26,7 @@ Classes
    test_searchlite.TestResultLinks
    test_searchlite.TestThemeSearchAdoption
    test_searchlite.TestCustomFilename
+   test_searchlite.TestObjectDescriptions
 
 
 Functions
@@ -118,6 +120,97 @@ Module Contents
 
 
 
+.. py:data:: API_RST
+   :value: Multiline-String
+
+   .. raw:: html
+
+      <details><summary>Show Value</summary>
+
+   .. code-block:: python
+
+      """
+      API
+      ===
+      
+      Intro to the API.
+      
+      Gadgets
+      -------
+      
+      Things that frob\ *nicate*.
+      
+      .. py:function:: legacy(x)
+         :no-index:
+      
+         Kept for older callers.
+      
+      .. py:function:: over(a)
+                       over(a, b)
+      
+         Overloaded.
+      
+      .. cpp:class:: template<typename T> ns::Thing
+      
+         A templated thing.
+      
+      .. py:class:: Gadget
+      
+         A gadget that frobnicates.
+      
+         .. py:method:: spin(speed)
+      
+            Spins the gadget sprocket.
+      
+      .. py:data:: TIMEOUT
+      
+         Seconds before the gadget gives up.
+      
+      .. py:module:: north
+      
+      .. py:class:: Client
+      
+         Northern client.
+      
+         .. py:method:: connect()
+      
+            Opens the northern connection.
+      
+      .. py:module:: south
+      
+      .. py:class:: Client
+      
+         Southern client.
+      
+         .. py:method:: connect()
+      
+            Opens the southern connection.
+      
+      .. cpp:namespace:: tools
+      
+      .. cpp:class:: Socket
+      
+         Network socket.
+      
+         .. cpp:function:: void open()
+      
+            Opens the socket.
+      
+      .. c:struct:: Data
+      
+         C structure.
+      
+         .. c:member:: int count
+      
+            Counts the entries.
+      """
+
+   .. raw:: html
+
+      </details>
+
+
+
 .. py:function:: _build(tmp_path_factory, conf: str, name: str) -> pathlib.Path
 
 .. py:function:: built(tmp_path_factory) -> pathlib.Path
@@ -199,5 +292,40 @@ Module Contents
 .. py:class:: TestCustomFilename
 
    .. py:method:: test_index_name_is_configurable(tmp_path_factory)
+
+
+.. py:class:: TestObjectDescriptions
+
+   .. py:method:: test_objects_get_their_own_anchored_record(records)
+
+
+   .. py:method:: test_nested_objects_are_indexed_by_full_name(records)
+
+
+   .. py:method:: test_object_names_include_module_and_parent_scope(records, name, anchor)
+
+
+   .. py:method:: test_scoped_names_do_not_depend_on_object_toc_entries(tmp_path_factory)
+
+
+   .. py:method:: test_object_text_excludes_nested_objects(records)
+
+
+   .. py:method:: test_section_text_excludes_object_descriptions(records)
+
+
+   .. py:method:: test_inline_markup_does_not_split_words(records)
+
+
+   .. py:method:: test_unindexed_objects_stay_in_section_text(records)
+
+
+   .. py:method:: test_every_overload_is_searchable(records)
+
+
+   .. py:method:: test_names_without_fullname_omit_signature_syntax(records)
+
+
+   .. py:method:: test_objects_past_the_text_limit_stay_searchable(tmp_path_factory)
 
 

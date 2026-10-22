@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="sphinx_searchlite" href="../sphinx_searchlite/index.html"><link rel="prev" title="API Reference" href="../index.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
-        <title>test_searchlite - sphinx-searchlite v0.2.1</title>
+        <title>test_searchlite - sphinx-searchlite v0.2.2</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -168,7 +168,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">sphinx-searchlite <code style='font-size: var(--font-size--small--4);color: var(--sd-color-primary);'>v0.2.1</code></div></a>
+      <a href="../../index.html"><div class="brand">sphinx-searchlite <code style='font-size: var(--font-size--small--4);color: var(--sd-color-primary);'>v0.2.2</code></div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -189,7 +189,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">sphinx-searchlite <code style='font-size: var(--font-size--small--4);color: var(--sd-color-primary);'>v0.2.1</code></span>
+  <span class="sidebar-brand-text">sphinx-searchlite <code style='font-size: var(--font-size--small--4);color: var(--sd-color-primary);'>v0.2.2</code></span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -263,6 +263,9 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#test_searchlite.GUIDE_MD" title="test_searchlite.GUIDE_MD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GUIDE_MD</span></code></a></p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test_searchlite.API_RST" title="test_searchlite.API_RST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">API_RST</span></code></a></p></td>
+<td><p></p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -288,6 +291,9 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#test_searchlite.TestCustomFilename" title="test_searchlite.TestCustomFilename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TestCustomFilename</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test_searchlite.TestObjectDescriptions" title="test_searchlite.TestObjectDescriptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TestObjectDescriptions</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -360,6 +366,88 @@
 <span class="sd">## Second section</span>
 
 <span class="sd">Other content.</span>
+<span class="sd">"""</span>
+</pre></div>
+</div>
+</details></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="test_searchlite.API_RST">
+<span class="sig-prename descclassname"><span class="pre">test_searchlite.</span></span><span class="sig-name descname"><span class="pre">API_RST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Multiline-String</span></em><a class="headerlink" href="#test_searchlite.API_RST" title="Link to this definition">¶</a></dt>
+<dd><details><summary>Show Value</summary><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""</span>
+<span class="sd">API</span>
+<span class="sd">===</span>
+
+<span class="sd">Intro to the API.</span>
+
+<span class="sd">Gadgets</span>
+<span class="sd">-------</span>
+
+<span class="sd">Things that frob\ *nicate*.</span>
+
+<span class="sd">.. py:function:: legacy(x)</span>
+<span class="sd">   :no-index:</span>
+
+<span class="sd">   Kept for older callers.</span>
+
+<span class="sd">.. py:function:: over(a)</span>
+<span class="sd">                 over(a, b)</span>
+
+<span class="sd">   Overloaded.</span>
+
+<span class="sd">.. cpp:class:: template&lt;typename T&gt; ns::Thing</span>
+
+<span class="sd">   A templated thing.</span>
+
+<span class="sd">.. py:class:: Gadget</span>
+
+<span class="sd">   A gadget that frobnicates.</span>
+
+<span class="sd">   .. py:method:: spin(speed)</span>
+
+<span class="sd">      Spins the gadget sprocket.</span>
+
+<span class="sd">.. py:data:: TIMEOUT</span>
+
+<span class="sd">   Seconds before the gadget gives up.</span>
+
+<span class="sd">.. py:module:: north</span>
+
+<span class="sd">.. py:class:: Client</span>
+
+<span class="sd">   Northern client.</span>
+
+<span class="sd">   .. py:method:: connect()</span>
+
+<span class="sd">      Opens the northern connection.</span>
+
+<span class="sd">.. py:module:: south</span>
+
+<span class="sd">.. py:class:: Client</span>
+
+<span class="sd">   Southern client.</span>
+
+<span class="sd">   .. py:method:: connect()</span>
+
+<span class="sd">      Opens the southern connection.</span>
+
+<span class="sd">.. cpp:namespace:: tools</span>
+
+<span class="sd">.. cpp:class:: Socket</span>
+
+<span class="sd">   Network socket.</span>
+
+<span class="sd">   .. cpp:function:: void open()</span>
+
+<span class="sd">      Opens the socket.</span>
+
+<span class="sd">.. c:struct:: Data</span>
+
+<span class="sd">   C structure.</span>
+
+<span class="sd">   .. c:member:: int count</span>
+
+<span class="sd">      Counts the entries.</span>
 <span class="sd">"""</span>
 </pre></div>
 </div>
@@ -515,6 +603,66 @@
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="test_searchlite.TestObjectDescriptions">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">test_searchlite.</span></span><span class="sig-name descname"><span class="pre">TestObjectDescriptions</span></span><a class="headerlink" href="#test_searchlite.TestObjectDescriptions" title="Link to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="test_searchlite.TestObjectDescriptions.test_objects_get_their_own_anchored_record">
+<span class="sig-name descname"><span class="pre">test_objects_get_their_own_anchored_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_searchlite.TestObjectDescriptions.test_objects_get_their_own_anchored_record" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="test_searchlite.TestObjectDescriptions.test_nested_objects_are_indexed_by_full_name">
+<span class="sig-name descname"><span class="pre">test_nested_objects_are_indexed_by_full_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_searchlite.TestObjectDescriptions.test_nested_objects_are_indexed_by_full_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="test_searchlite.TestObjectDescriptions.test_object_names_include_module_and_parent_scope">
+<span class="sig-name descname"><span class="pre">test_object_names_include_module_and_parent_scope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anchor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_searchlite.TestObjectDescriptions.test_object_names_include_module_and_parent_scope" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="test_searchlite.TestObjectDescriptions.test_scoped_names_do_not_depend_on_object_toc_entries">
+<span class="sig-name descname"><span class="pre">test_scoped_names_do_not_depend_on_object_toc_entries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tmp_path_factory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_searchlite.TestObjectDescriptions.test_scoped_names_do_not_depend_on_object_toc_entries" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="test_searchlite.TestObjectDescriptions.test_object_text_excludes_nested_objects">
+<span class="sig-name descname"><span class="pre">test_object_text_excludes_nested_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_searchlite.TestObjectDescriptions.test_object_text_excludes_nested_objects" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="test_searchlite.TestObjectDescriptions.test_section_text_excludes_object_descriptions">
+<span class="sig-name descname"><span class="pre">test_section_text_excludes_object_descriptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_searchlite.TestObjectDescriptions.test_section_text_excludes_object_descriptions" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="test_searchlite.TestObjectDescriptions.test_inline_markup_does_not_split_words">
+<span class="sig-name descname"><span class="pre">test_inline_markup_does_not_split_words</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_searchlite.TestObjectDescriptions.test_inline_markup_does_not_split_words" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="test_searchlite.TestObjectDescriptions.test_unindexed_objects_stay_in_section_text">
+<span class="sig-name descname"><span class="pre">test_unindexed_objects_stay_in_section_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_searchlite.TestObjectDescriptions.test_unindexed_objects_stay_in_section_text" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="test_searchlite.TestObjectDescriptions.test_every_overload_is_searchable">
+<span class="sig-name descname"><span class="pre">test_every_overload_is_searchable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_searchlite.TestObjectDescriptions.test_every_overload_is_searchable" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="test_searchlite.TestObjectDescriptions.test_names_without_fullname_omit_signature_syntax">
+<span class="sig-name descname"><span class="pre">test_names_without_fullname_omit_signature_syntax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">records</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_searchlite.TestObjectDescriptions.test_names_without_fullname_omit_signature_syntax" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="test_searchlite.TestObjectDescriptions.test_objects_past_the_text_limit_stay_searchable">
+<span class="sig-name descname"><span class="pre">test_objects_past_the_text_limit_stay_searchable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tmp_path_factory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test_searchlite.TestObjectDescriptions.test_objects_past_the_text_limit_stay_searchable" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -581,6 +729,7 @@
 <li><a class="reference internal" href="#test_searchlite.CONF"><code class="docutils literal notranslate"><span class="pre">CONF</span></code></a></li>
 <li><a class="reference internal" href="#test_searchlite.INDEX_MD"><code class="docutils literal notranslate"><span class="pre">INDEX_MD</span></code></a></li>
 <li><a class="reference internal" href="#test_searchlite.GUIDE_MD"><code class="docutils literal notranslate"><span class="pre">GUIDE_MD</span></code></a></li>
+<li><a class="reference internal" href="#test_searchlite.API_RST"><code class="docutils literal notranslate"><span class="pre">API_RST</span></code></a></li>
 <li><a class="reference internal" href="#test_searchlite._build"><code class="docutils literal notranslate"><span class="pre">_build()</span></code></a></li>
 <li><a class="reference internal" href="#test_searchlite.built"><code class="docutils literal notranslate"><span class="pre">built()</span></code></a></li>
 <li><a class="reference internal" href="#test_searchlite.records"><code class="docutils literal notranslate"><span class="pre">records()</span></code></a></li>
@@ -623,6 +772,20 @@
 <li><a class="reference internal" href="#test_searchlite.TestCustomFilename.test_index_name_is_configurable"><code class="docutils literal notranslate"><span class="pre">TestCustomFilename.test_index_name_is_configurable()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#test_searchlite.TestObjectDescriptions"><code class="docutils literal notranslate"><span class="pre">TestObjectDescriptions</span></code></a><ul>
+<li><a class="reference internal" href="#test_searchlite.TestObjectDescriptions.test_objects_get_their_own_anchored_record"><code class="docutils literal notranslate"><span class="pre">TestObjectDescriptions.test_objects_get_their_own_anchored_record()</span></code></a></li>
+<li><a class="reference internal" href="#test_searchlite.TestObjectDescriptions.test_nested_objects_are_indexed_by_full_name"><code class="docutils literal notranslate"><span class="pre">TestObjectDescriptions.test_nested_objects_are_indexed_by_full_name()</span></code></a></li>
+<li><a class="reference internal" href="#test_searchlite.TestObjectDescriptions.test_object_names_include_module_and_parent_scope"><code class="docutils literal notranslate"><span class="pre">TestObjectDescriptions.test_object_names_include_module_and_parent_scope()</span></code></a></li>
+<li><a class="reference internal" href="#test_searchlite.TestObjectDescriptions.test_scoped_names_do_not_depend_on_object_toc_entries"><code class="docutils literal notranslate"><span class="pre">TestObjectDescriptions.test_scoped_names_do_not_depend_on_object_toc_entries()</span></code></a></li>
+<li><a class="reference internal" href="#test_searchlite.TestObjectDescriptions.test_object_text_excludes_nested_objects"><code class="docutils literal notranslate"><span class="pre">TestObjectDescriptions.test_object_text_excludes_nested_objects()</span></code></a></li>
+<li><a class="reference internal" href="#test_searchlite.TestObjectDescriptions.test_section_text_excludes_object_descriptions"><code class="docutils literal notranslate"><span class="pre">TestObjectDescriptions.test_section_text_excludes_object_descriptions()</span></code></a></li>
+<li><a class="reference internal" href="#test_searchlite.TestObjectDescriptions.test_inline_markup_does_not_split_words"><code class="docutils literal notranslate"><span class="pre">TestObjectDescriptions.test_inline_markup_does_not_split_words()</span></code></a></li>
+<li><a class="reference internal" href="#test_searchlite.TestObjectDescriptions.test_unindexed_objects_stay_in_section_text"><code class="docutils literal notranslate"><span class="pre">TestObjectDescriptions.test_unindexed_objects_stay_in_section_text()</span></code></a></li>
+<li><a class="reference internal" href="#test_searchlite.TestObjectDescriptions.test_every_overload_is_searchable"><code class="docutils literal notranslate"><span class="pre">TestObjectDescriptions.test_every_overload_is_searchable()</span></code></a></li>
+<li><a class="reference internal" href="#test_searchlite.TestObjectDescriptions.test_names_without_fullname_omit_signature_syntax"><code class="docutils literal notranslate"><span class="pre">TestObjectDescriptions.test_names_without_fullname_omit_signature_syntax()</span></code></a></li>
+<li><a class="reference internal" href="#test_searchlite.TestObjectDescriptions.test_objects_past_the_text_limit_stay_searchable"><code class="docutils literal notranslate"><span class="pre">TestObjectDescriptions.test_objects_past_the_text_limit_stay_searchable()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -636,7 +799,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=37f418d5"></script>
+</div><script src="../../_static/documentation_options.js?v=000c92bf"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>

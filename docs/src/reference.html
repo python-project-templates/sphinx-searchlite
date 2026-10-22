@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Explanation" href="explanation.html"><link rel="prev" title="How-to guides" href="how-to.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
-        <title>Reference - sphinx-searchlite v0.2.1</title>
+        <title>Reference - sphinx-searchlite v0.2.2</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -168,7 +168,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">sphinx-searchlite <code style='font-size: var(--font-size--small--4);color: var(--sd-color-primary);'>v0.2.1</code></div></a>
+      <a href="../../index.html"><div class="brand">sphinx-searchlite <code style='font-size: var(--font-size--small--4);color: var(--sd-color-primary);'>v0.2.2</code></div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -189,7 +189,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  <span class="sidebar-brand-text">sphinx-searchlite <code style='font-size: var(--font-size--small--4);color: var(--sd-color-primary);'>v0.2.1</code></span>
+  <span class="sidebar-brand-text">sphinx-searchlite <code style='font-size: var(--font-size--small--4);color: var(--sd-color-primary);'>v0.2.2</code></span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -284,7 +284,8 @@
 <section id="index-format">
 <h2>Index format<a class="headerlink" href="#index-format" title="Link to this heading">¶</a></h2>
 <p>The index is a JSON array of records. Each page produces one record for the
-page and one for each section that has an anchor.</p>
+page, one for each section that has an anchor, and one for each object
+description that has an anchor, such as an autodoc class, method or attribute.</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -294,16 +295,16 @@ page and one for each section that has an anchor.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">u</span></code></p></td>
-<td><p>URL relative to the documentation root, with <code class="docutils literal notranslate"><span class="pre">#anchor</span></code> for sections.</p></td>
+<td><p>URL relative to the documentation root, with <code class="docutils literal notranslate"><span class="pre">#anchor</span></code> for sections and objects.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">t</span></code></p></td>
 <td><p>Title of the page.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">s</span></code></p></td>
-<td><p>Section heading. Absent on page records.</p></td>
+<td><p>Section heading, or the object’s full name. Absent on page records.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
-<td><p>Text, truncated to <code class="docutils literal notranslate"><span class="pre">searchlite_max_text</span></code>. Sections exclude nested sections.</p></td>
+<td><p>Text, truncated to <code class="docutils literal notranslate"><span class="pre">searchlite_max_text</span></code>. Sections exclude nested sections and objects; objects exclude nested objects.</p></td>
 </tr>
 </tbody>
 </table>
@@ -504,7 +505,7 @@ clicked.</p>
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=37f418d5"></script>
+</div><script src="../../_static/documentation_options.js?v=000c92bf"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
