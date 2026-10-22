@@ -37,12 +37,89 @@ More detail.
 Other content.
 """
 
+API_RST = """
+API
+===
+
+Intro to the API.
+
+Gadgets
+-------
+
+Things that frob\\ *nicate*.
+
+.. py:function:: legacy(x)
+   :no-index:
+
+   Kept for older callers.
+
+.. py:function:: over(a)
+                 over(a, b)
+
+   Overloaded.
+
+.. cpp:class:: template<typename T> ns::Thing
+
+   A templated thing.
+
+.. py:class:: Gadget
+
+   A gadget that frobnicates.
+
+   .. py:method:: spin(speed)
+
+      Spins the gadget sprocket.
+
+.. py:data:: TIMEOUT
+
+   Seconds before the gadget gives up.
+
+.. py:module:: north
+
+.. py:class:: Client
+
+   Northern client.
+
+   .. py:method:: connect()
+
+      Opens the northern connection.
+
+.. py:module:: south
+
+.. py:class:: Client
+
+   Southern client.
+
+   .. py:method:: connect()
+
+      Opens the southern connection.
+
+.. cpp:namespace:: tools
+
+.. cpp:class:: Socket
+
+   Network socket.
+
+   .. cpp:function:: void open()
+
+      Opens the socket.
+
+.. c:struct:: Data
+
+   C structure.
+
+   .. c:member:: int count
+
+      Counts the entries.
+"""
+
 
 def _build(tmp_path_factory, conf: str, name: str) -> Path:
     src = tmp_path_factory.mktemp(name)
     (src / "conf.py").write_text(conf)
-    (src / "index.md").write_text(INDEX_MD)
+    (src / "index.md").write_text(INDEX_MD.replace("guide\n", "guide\napi\n"))
     (src / "guide.md").write_text(GUIDE_MD)
+    (src / "api.rst").write_text(API_RST)
     out = src / "_build"
     Sphinx(str(src), str(src), str(out), str(out / ".doctrees"), "html", freshenv=True, status=None).build()
     return out
@@ -161,3 +238,67 @@ class TestCustomFilename:
         out = _build(tmp_path_factory, CONF + '\nsearchlite_index_filename = "docs-index.json"\n', "src_named")
         assert (out / "_static" / "docs-index.json").is_file()
         assert 'data-searchlite-index="docs-index.json"' in (out / "guide.html").read_text()
+
+
+class TestObjectDescriptions:
+    def test_objects_get_their_own_anchored_record(self, records):
+        record = next(record for record in records if record.get("s") == "Gadget")
+        assert record["u"] == "api.html#Gadget"
+        assert record["t"] == "API"
+        assert "A gadget that frobnicates" in record["x"]
+
+    def test_nested_objects_are_indexed_by_full_name(self, records):
+        record = next(record for record in records if record.get("s") == "Gadget.spin")
+        assert record["u"] == "api.html#Gadget.spin"
+        assert "sprocket" in record["x"]
+
+    @pytest.mark.parametrize(
+        ("name", "anchor"),
+        [
+            ("north.Client.connect", "north.Client.connect"),
+            ("south.Client.connect", "south.Client.connect"),
+            ("tools::Socket::open", "_CPPv4N5tools6Socket4openEv"),
+            ("Data.count", "c.Data.count"),
+        ],
+    )
+    def test_object_names_include_module_and_parent_scope(self, records, name, anchor):
+        record = next(record for record in records if record["u"] == f"api.html#{anchor}")
+        assert record["s"] == name
+
+    def test_scoped_names_do_not_depend_on_object_toc_entries(self, tmp_path_factory):
+        out = _build(tmp_path_factory, CONF + "\ntoc_object_entries = False\n", "src_no_object_toc")
+        entries = json.loads((out / "_static" / "searchlite-index.json").read_text())
+        names = {record.get("s") for record in entries}
+        assert {"north.Client.connect", "south.Client.connect", "tools::Socket::open", "Data.count"} <= names
+
+    def test_object_text_excludes_nested_objects(self, records):
+        record = next(record for record in records if record.get("s") == "Gadget")
+        assert "sprocket" not in record["x"]
+
+    def test_section_text_excludes_object_descriptions(self, records):
+        section = next(record for record in records if record.get("s") == "Gadgets")
+        assert "A gadget" not in section["x"]
+        assert "Seconds before" not in section["x"]
+
+    def test_inline_markup_does_not_split_words(self, records):
+        section = next(record for record in records if record.get("s") == "Gadgets")
+        assert "Things that frobnicate" in section["x"]
+
+    def test_unindexed_objects_stay_in_section_text(self, records):
+        section = next(record for record in records if record.get("s") == "Gadgets")
+        assert "Kept for older callers" in section["x"]
+        assert not [record for record in records if record.get("s") == "legacy"]
+
+    def test_every_overload_is_searchable(self, records):
+        record = next(record for record in records if record.get("s") == "over")
+        assert "over(a)" in record["x"]
+        assert "over(a, b)" in record["x"]
+
+    def test_names_without_fullname_omit_signature_syntax(self, records):
+        record = next(record for record in records if "_CPP" in record["u"])
+        assert record["s"] == "ns::Thing"
+
+    def test_objects_past_the_text_limit_stay_searchable(self, tmp_path_factory):
+        out = _build(tmp_path_factory, CONF + "\nsearchlite_max_text = 20\n", "src_short_api")
+        entries = json.loads((out / "_static" / "searchlite-index.json").read_text())
+        assert any(record.get("s") == "TIMEOUT" for record in entries)

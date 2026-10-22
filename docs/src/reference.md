@@ -14,14 +14,15 @@ Set these in `conf.py`.
 ## Index format
 
 The index is a JSON array of records. Each page produces one record for the
-page and one for each section that has an anchor.
+page, one for each section that has an anchor, and one for each object
+description that has an anchor, such as an autodoc class, method or attribute.
 
-| Key | Description                                                                 |
-| --- | --------------------------------------------------------------------------- |
-| `u` | URL relative to the documentation root, with `#anchor` for sections.        |
-| `t` | Title of the page.                                                          |
-| `s` | Section heading. Absent on page records.                                    |
-| `x` | Text, truncated to `searchlite_max_text`. Sections exclude nested sections. |
+| Key | Description                                                                                                             |
+| --- | ----------------------------------------------------------------------------------------------------------------------- |
+| `u` | URL relative to the documentation root, with `#anchor` for sections and objects.                                        |
+| `t` | Title of the page.                                                                                                      |
+| `s` | Section heading, or the object's full name. Absent on page records.                                                     |
+| `x` | Text, truncated to `searchlite_max_text`. Sections exclude nested sections and objects; objects exclude nested objects. |
 
 `engine.load()` rewrites `u` to an absolute URL.
 
