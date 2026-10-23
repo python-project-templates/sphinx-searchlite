@@ -149,3 +149,5 @@ root = "README.md"
 pages = ["docs/src/how-to.md", "docs/src/reference.md", "docs/src/explanation.md"]
 use-autoapi = true
 
+[tool.yardang.llms]
+enabled = true
