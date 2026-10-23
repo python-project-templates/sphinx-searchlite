@@ -270,6 +270,10 @@ body[data-layout="notebook"] #fd-subnav {
   background: var(--color-fd-accent);
 }
 
+.fd-nav-links .fd-icon-button {
+  padding: 0;
+}
+
 .fd-nav-actions {
   display: flex;
   align-items: center;
@@ -423,6 +427,7 @@ html[data-sidebar-collapsed="true"] #fd-sidebar {
 
 .fd-toolbar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   width: 100%;
   padding: 2px 0 2px 2px;

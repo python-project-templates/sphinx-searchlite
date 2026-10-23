@@ -1,0 +1,18 @@
+# sphinx-searchlite
+
+> Client-side BM25 documentation search for any Sphinx theme
+
+## Pages
+
+- [sphinx-searchlite](index.html.md): Client-side documentation search for any Sphinx theme. It needs no search service, no runtime dependency, and no build step beyond Sphinx itself.
+- [How-to guides](docs/src/how-to.html.md): By default searchlite takes over the theme’s search box so that it opens the dialog. To leave the box wired to Sphinx’s search.html, set:
+- [Reference](docs/src/reference.html.md): Set these in conf.py.
+- [Explanation](docs/src/explanation.html.md): Sphinx ships searchindex.js, but it is tied to searchtools.js and the dedicated search.html page, and there is no supported way to query it from your own UI....
+- [API Reference](autoapi/index.html.md): This page contains auto-generated API reference documentation 1.
+- [test_searchlite](autoapi/test_searchlite/index.html.md): CONF
+- [sphinx_searchlite](autoapi/sphinx_searchlite/index.html.md): Client-side documentation search for any Sphinx theme.
+- [sphinx_searchlite._index](autoapi/sphinx_searchlite/_index/index.html.md): Build the client-side search index.
+
+## Full documentation
+
+- [llms-full.txt](llms-full.txt): All pages in one document.

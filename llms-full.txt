@@ -1,0 +1,579 @@
+<!-- index.html.md -->
+
+# sphinx-searchlite
+
+Client-side documentation search for any Sphinx theme. It needs no search
+service, no runtime dependency, and no build step beyond Sphinx itself.
+
+[![Build Status](https://github.com/python-project-templates/sphinx-searchlite/actions/workflows/build.yaml/badge.svg?branch=main&event=push)](https://github.com/python-project-templates/sphinx-searchlite/actions/workflows/build.yaml)
+[![codecov](https://codecov.io/gh/python-project-templates/sphinx-searchlite/branch/main/graph/badge.svg)](https://codecov.io/gh/python-project-templates/sphinx-searchlite)
+[![License](https://img.shields.io/github/license/python-project-templates/sphinx-searchlite)](https://github.com/python-project-templates/sphinx-searchlite)
+[![PyPI](https://img.shields.io/pypi/v/sphinx-searchlite.svg)](https://pypi.python.org/pypi/sphinx-searchlite)
+
+## Quick start
+
+Install the package:
+
+```bash
+pip install sphinx-searchlite
+```
+
+Add it to `conf.py`:
+
+```python
+extensions = ["sphinx_searchlite"]
+```
+
+Build your docs and open any page. Press `/` or `⌘K` (`Ctrl+K` on Linux and
+Windows) to open the search dialog. If your theme has its own search box,
+clicking it opens the same dialog.
+
+## Documentation
+
+- [How-to guides](docs/src/how-to.html.md): keep the theme’s search box, write your
+  own UI, add triggers, and restyle the dialog.
+- [Reference](docs/src/reference.html.md): configuration options, the JavaScript
+  API, the index format, and CSS custom properties.
+- [Explanation](docs/src/explanation.html.md): why searchlite exists, how ranking
+  works, and how the dialog picks its colors.
+
+#### NOTE
+This library was generated using [copier](https://copier.readthedocs.io/en/stable/) from the [Base Python Project Template repository](https://github.com/python-project-templates/base).
+
+<!-- docs/src/how-to.html.md -->
+
+# How-to guides
+
+## Keep the theme’s own search box
+
+By default searchlite takes over the theme’s search box so that it opens the
+dialog. To leave the box wired to Sphinx’s `search.html`, set:
+
+```python
+searchlite_adopt_theme_search = False
+```
+
+The dialog still opens with `/` and `⌘K`, and from any element with
+`data-searchlite-open`.
+
+## Add a button that opens the dialog
+
+Add the `data-searchlite-open` attribute to any element in your templates:
+
+```html
+<button type="button" data-searchlite-open>Search</button>
+```
+
+## Use your own search UI
+
+Turn off the bundled dialog so only the engine is shipped:
+
+```python
+searchlite_ui = False
+```
+
+Then query the engine from your own script:
+
+```js
+const engine = SearchLite.create({ url: SearchLite.indexUrl });
+
+await engine.load();
+const { items, terms } = engine.search("query");
+
+for (const item of items) {
+  const snippet = SearchLite.highlight(SearchLite.excerpt(item, terms), terms);
+  // render item.u, item.t, item.s, and snippet
+}
+```
+
+See the [JavaScript API](reference.html.md#javascript-api) for what each call
+returns.
+
+## Restyle the dialog
+
+Set `--searchlite-*` custom properties on `#searchlite-dialog`:
+
+```css
+#searchlite-dialog {
+  --searchlite-background: #111;
+  --searchlite-foreground: #eee;
+  --searchlite-radius: 0.25rem;
+}
+```
+
+Target the dialog element rather than `:root`. The dialog copies the page’s
+colors onto itself at runtime, and those inline values override anything
+inherited from `:root`. Setting the background and foreground is usually
+enough, because the muted, border, and accent colors are mixed from the
+foreground.
+
+<!-- docs/src/reference.html.md -->
+
+# Reference
+
+## Configuration
+
+Set these in `conf.py`.
+
+| Option                          | Default                 | Description                                                                                 |
+|---------------------------------|-------------------------|---------------------------------------------------------------------------------------------|
+| `searchlite_index_filename`     | `searchlite-index.json` | Name of the index file written to `_static/`.                                               |
+| `searchlite_max_text`           | `1200`                  | Maximum characters of body text kept per record.                                            |
+| `searchlite_ui`                 | `True`                  | Ship the bundled dialog and its CSS. When `False`, only the engine is shipped.              |
+| `searchlite_adopt_theme_search` | `True`                  | Make the theme’s search box open the dialog. Has no effect when `searchlite_ui` is `False`. |
+
+## Index format
+
+The index is a JSON array of records. Each page produces one record for the
+page, one for each section that has an anchor, and one for each object
+description that has an anchor, such as an autodoc class, method or attribute.
+
+| Key   | Description                                                                                                             |
+|-------|-------------------------------------------------------------------------------------------------------------------------|
+| `u`   | URL relative to the documentation root, with `#anchor` for sections and objects.                                        |
+| `t`   | Title of the page.                                                                                                      |
+| `s`   | Section heading, or the object’s full name. Absent on page records.                                                     |
+| `x`   | Text, truncated to `searchlite_max_text`. Sections exclude nested sections and objects; objects exclude nested objects. |
+
+`engine.load()` rewrites `u` to an absolute URL.
+
+## JavaScript API
+
+The engine defines a global `SearchLite` object.
+
+### `SearchLite.create({ url })`
+
+Returns an engine for the index at `url`. Nothing is fetched until `load()` is
+called.
+
+### `engine.load()`
+
+Fetches and indexes the records. Returns a promise. Repeated calls return the
+same promise. A failed fetch produces an empty index.
+
+### `engine.ready()`
+
+Returns `true` once the index is built.
+
+### `engine.search(query)`
+
+Returns `{ items, terms }`. `items` is an array of up to 20 records, best match
+first. `terms` lists the index terms that matched, including prefix expansions.
+Returns empty arrays if the index is not loaded or the query has no words.
+
+### `SearchLite.indexUrl`
+
+Absolute URL of the index for the current page, or `null` if it cannot be
+resolved.
+
+### `SearchLite.tokenize(text)`
+
+Returns the lowercase words in `text`, split on anything other than `a-z`,
+`0-9`, and `_`.
+
+### `SearchLite.excerpt(record, terms, length = 120)`
+
+Returns about `length` characters of `record.x`, starting just before the first
+matching term. Prefixed with `…` when it does not start at the beginning.
+
+### `SearchLite.highlight(text, terms)`
+
+Returns a `DocumentFragment` of `text` with each match wrapped in `<mark>`.
+
+## Dialog
+
+| Key                 | Action                     |
+|---------------------|----------------------------|
+| `/`, `⌘K`, `Ctrl+K` | Open the dialog.           |
+| `↑`, `↓`            | Move between results.      |
+| `Enter`             | Go to the selected result. |
+| `Escape`            | Close the dialog.          |
+
+Any element with the `data-searchlite-open` attribute opens the dialog when
+clicked.
+
+## CSS custom properties
+
+| Property                  | Default                           | Set on                   |
+|---------------------------|-----------------------------------|--------------------------|
+| `--searchlite-background` | `#fff`, or the page background    | `:root`, then the dialog |
+| `--searchlite-foreground` | `#18181b`, or the page text color | `:root`, then the dialog |
+| `--searchlite-radius`     | `0.75rem`                         | `:root`                  |
+| `--searchlite-muted`      | foreground at 60%                 | `#searchlite-dialog`     |
+| `--searchlite-border`     | foreground at 20%                 | `#searchlite-dialog`     |
+| `--searchlite-accent`     | foreground at 10%                 | `#searchlite-dialog`     |
+
+<!-- docs/src/explanation.html.md -->
+
+# Explanation
+
+## Why not Sphinx’s own search?
+
+Sphinx ships `searchindex.js`, but it is tied to `searchtools.js` and the
+dedicated `search.html` page, and there is no supported way to query it from
+your own UI. searchlite writes plain JSON records instead, so a theme can score
+and render results however it likes.
+
+## How ranking works
+
+Results are scored with BM25 over the record text, with extra weight for two
+fields:
+
+- the record’s own heading, weighted heavily
+- the title of the page it belongs to, weighted lightly
+
+These are kept separate because every section of a page shares that page’s
+title. If both were weighted heavily, searching for a page title would rank
+its subsections alongside the page itself, often above it.
+
+The last word of the query is matched as a prefix as well as exactly, since
+you are probably still typing it. That way `install` also finds
+`installation`. Results must match every query word that appears in the index,
+so adding words narrows the results. Words that appear nowhere in the index are
+ignored.
+
+## Why the dialog takes over the theme’s search box
+
+Most themes render a search box that submits to `search.html`. Left alone, a
+page would have two different searches, and the dialog would have no visible
+way to open it. searchlite makes that box read-only and opens the dialog when
+it is clicked, activated with `Enter` or `Space`, or its form is submitted.
+It does not open on focus, because closing the dialog returns focus to the box,
+which would open it again.
+
+## How the dialog picks its colors
+
+The dialog reads the page’s background and text colors and copies them onto
+itself. It watches for changes, so it follows the theme’s light and dark
+toggle. Most themes switch modes with a class or attribute, which
+`prefers-color-scheme` does not detect.
+
+<!-- autoapi/index.html.md -->
+
+# API Reference
+
+This page contains auto-generated API reference documentation <sup>[1](#f1)</sup>.
+
+* <a id='f1'>**[1]**</a> Created with [sphinx-autoapi](https://github.com/readthedocs/sphinx-autoapi)
+
+<!-- autoapi/test_searchlite/index.html.md -->
+
+# test_searchlite
+
+## Attributes
+
+| [`CONF`](#test_searchlite.CONF)         |    |
+|-----------------------------------------|----|
+| [`INDEX_MD`](#test_searchlite.INDEX_MD) |    |
+| [`GUIDE_MD`](#test_searchlite.GUIDE_MD) |    |
+| [`API_RST`](#test_searchlite.API_RST)   |    |
+
+## Classes
+
+| [`TestIndex`](#test_searchlite.TestIndex)                             |    |
+|-----------------------------------------------------------------------|----|
+| [`TestAssets`](#test_searchlite.TestAssets)                           |    |
+| [`TestUiDisabled`](#test_searchlite.TestUiDisabled)                   |    |
+| [`TestResultLinks`](#test_searchlite.TestResultLinks)                 |    |
+| [`TestThemeSearchAdoption`](#test_searchlite.TestThemeSearchAdoption) |    |
+| [`TestCustomFilename`](#test_searchlite.TestCustomFilename)           |    |
+| [`TestObjectDescriptions`](#test_searchlite.TestObjectDescriptions)   |    |
+
+## Functions
+
+| [`_build`](#test_searchlite._build)(→ pathlib.Path)   |    |
+|-------------------------------------------------------|----|
+| [`built`](#test_searchlite.built)(→ pathlib.Path)     |    |
+| [`records`](#test_searchlite.records)(→ list[dict])   |    |
+
+## Module Contents
+
+### test_searchlite.CONF *= Multiline-String*
+
+<details><summary>Show Value</summary>
+```python
+"""
+extensions = ["myst_parser", "sphinx_searchlite"]
+project = "Demo"
+html_theme = "basic"
+"""
+```
+
+</details>
+
+### test_searchlite.INDEX_MD *= Multiline-String*
+
+<details><summary>Show Value</summary>
+```python
+"""
+# Demo
+
+Intro text.
+
+```{toctree}
+
+guide
+```
+"""
+```
+
+</details>
+
+### test_searchlite.GUIDE_MD *= Multiline-String*
+
+<details><summary>Show Value</summary>
+```python
+"""
+# Guide
+
+## First section
+
+Content about widgets.
+
+### Nested heading
+
+More detail.
+
+## Second section
+
+Other content.
+"""
+```
+
+</details>
+
+### test_searchlite.API_RST *= Multiline-String*
+
+<details><summary>Show Value</summary>
+```python
+"""
+API
+===
+
+Intro to the API.
+
+Gadgets
+-------
+
+Things that frob\ *nicate*.
+
+.. py:function:: legacy(x)
+   :no-index:
+
+   Kept for older callers.
+
+.. py:function:: over(a)
+                 over(a, b)
+
+   Overloaded.
+
+.. cpp:class:: template<typename T> ns::Thing
+
+   A templated thing.
+
+.. py:class:: Gadget
+
+   A gadget that frobnicates.
+
+   .. py:method:: spin(speed)
+
+      Spins the gadget sprocket.
+
+.. py:data:: TIMEOUT
+
+   Seconds before the gadget gives up.
+
+.. py:module:: north
+
+.. py:class:: Client
+
+   Northern client.
+
+   .. py:method:: connect()
+
+      Opens the northern connection.
+
+.. py:module:: south
+
+.. py:class:: Client
+
+   Southern client.
+
+   .. py:method:: connect()
+
+      Opens the southern connection.
+
+.. cpp:namespace:: tools
+
+.. cpp:class:: Socket
+
+   Network socket.
+
+   .. cpp:function:: void open()
+
+      Opens the socket.
+
+.. c:struct:: Data
+
+   C structure.
+
+   .. c:member:: int count
+
+      Counts the entries.
+"""
+```
+
+</details>
+
+### test_searchlite.\_build(tmp_path_factory, conf: str, name: str) → pathlib.Path
+
+### test_searchlite.built(tmp_path_factory) → pathlib.Path
+
+### test_searchlite.records(built) → list[dict]
+
+### *class* test_searchlite.TestIndex
+
+#### test_index_is_emitted(built)
+
+#### test_page_records_carry_url_title_and_text(records)
+
+#### test_sections_get_their_own_anchored_record(records)
+
+#### test_section_text_excludes_nested_sections(records)
+
+#### test_page_title_is_not_duplicated_as_a_section(records)
+
+#### test_text_is_truncated_to_the_configured_limit(tmp_path_factory)
+
+### *class* test_searchlite.TestAssets
+
+#### test_engine_is_linked_with_the_index_name(built)
+
+#### test_bundled_ui_is_shipped_by_default(built)
+
+### *class* test_searchlite.TestUiDisabled
+
+#### *classmethod* built(tmp_path_factory) → pathlib.Path
+
+#### test_engine_is_still_shipped(built)
+
+#### test_dialog_and_styles_are_omitted(built)
+
+#### test_ui_assets_are_not_copied(built)
+
+#### test_index_is_still_emitted(built)
+
+### *class* test_searchlite.TestResultLinks
+
+#### test_urls_resolve_against_the_documentation_root(built)
+
+### *class* test_searchlite.TestThemeSearchAdoption
+
+#### test_adoption_is_advertised_to_the_ui_script(built)
+
+#### test_adoption_can_be_switched_off(tmp_path_factory)
+
+#### test_adopted_fields_do_not_reopen_the_dialog_on_focus(built)
+
+#### test_escape_closes_the_dialog_on_the_first_press(built)
+
+#### test_styles_no_longer_hardcode_a_dark_palette(built)
+
+#### test_palette_derives_from_two_variables(built)
+
+### *class* test_searchlite.TestCustomFilename
+
+#### test_index_name_is_configurable(tmp_path_factory)
+
+### *class* test_searchlite.TestObjectDescriptions
+
+#### test_objects_get_their_own_anchored_record(records)
+
+#### test_nested_objects_are_indexed_by_full_name(records)
+
+#### test_object_names_include_module_and_parent_scope(records, name, anchor)
+
+#### test_scoped_names_do_not_depend_on_object_toc_entries(tmp_path_factory)
+
+#### test_object_text_excludes_nested_objects(records)
+
+#### test_section_text_excludes_object_descriptions(records)
+
+#### test_inline_markup_does_not_split_words(records)
+
+#### test_unindexed_objects_stay_in_section_text(records)
+
+#### test_every_overload_is_searchable(records)
+
+#### test_names_without_fullname_omit_signature_syntax(records)
+
+#### test_objects_past_the_text_limit_stay_searchable(tmp_path_factory)
+
+<!-- autoapi/sphinx_searchlite/index.html.md -->
+
+# sphinx_searchlite
+
+Client-side documentation search for any Sphinx theme.
+
+Emits a small JSON index next to the build and ships a dependency-free BM25
+engine to score it in the browser. Themes can either use the bundled dialog or
+drive `window.SearchLite` themselves.
+
+## Submodules
+
+## Attributes
+
+| [`STATIC_DIR`](#sphinx_searchlite.STATIC_DIR)   |    |
+|-------------------------------------------------|----|
+| [`ENGINE_DIR`](#sphinx_searchlite.ENGINE_DIR)   |    |
+| [`UI_DIR`](#sphinx_searchlite.UI_DIR)           |    |
+
+## Functions
+
+| [`collect_records`](#sphinx_searchlite.collect_records)(→ list[dict[str, str]])   | Return one record for the page plus one per addressable section and object description.   |
+|-----------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| [`setup`](#sphinx_searchlite.setup)(→ dict[str, object])                          |                                                                                           |
+
+## Package Contents
+
+### sphinx_searchlite.collect_records(app, pagename: str, doctree: docutils.nodes.document) → list[dict[str, str]][[source]](../../_modules/sphinx_searchlite/_index.html.md#collect_records)
+
+Return one record for the page plus one per addressable section and object description.
+
+Keys are short because the index ships to the browser: `u` url, `t` page
+title, `s` section heading, `x` text.
+
+### sphinx_searchlite.STATIC_DIR
+
+### sphinx_searchlite.ENGINE_DIR
+
+### sphinx_searchlite.UI_DIR
+
+### sphinx_searchlite.setup(app) → dict[str, object][[source]](../../_modules/sphinx_searchlite.html.md#setup)
+
+<!-- autoapi/sphinx_searchlite/_index/index.html.md -->
+
+# sphinx_searchlite._index
+
+Build the client-side search index.
+
+Sphinx’s own `searchindex.js` is coupled to `searchtools.js` and its
+dedicated `search.html` page. This emits plain records any front end can
+score itself, keyed so that section anchors survive incremental builds.
+
+## Functions
+
+| [`collect_records`](#sphinx_searchlite._index.collect_records)(→ list[dict[str, str]])   | Return one record for the page plus one per addressable section and object description.   |
+|------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| [`setup_index`](#sphinx_searchlite._index.setup_index)(→ None)                           |                                                                                           |
+
+## Module Contents
+
+### sphinx_searchlite._index.collect_records(app, pagename: str, doctree: docutils.nodes.document) → list[dict[str, str]][[source]](../../../_modules/sphinx_searchlite/_index.html.md#collect_records)
+
+Return one record for the page plus one per addressable section and object description.
+
+Keys are short because the index ships to the browser: `u` url, `t` page
+title, `s` section heading, `x` text.
+
+### sphinx_searchlite._index.setup_index(app) → None[[source]](../../../_modules/sphinx_searchlite/_index.html.md#setup_index)
