@@ -8,6 +8,19 @@
   var body = document.body;
   var docEl = document.documentElement;
 
+  document.querySelectorAll(".fd-llms").forEach(function (menu) {
+    document.addEventListener("click", function (event) {
+      if (!menu.contains(event.target) || event.target.closest("a")) menu.open = false;
+    });
+    menu.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && menu.open) {
+        menu.open = false;
+        menu.querySelector("summary").focus();
+        event.preventDefault();
+      }
+    });
+  });
+
   /* Theme -------------------------------------------------------------- */
 
   function isDark() {
@@ -84,6 +97,20 @@
   });
   var restore = document.getElementById("fd-sidebar-restore");
   if (restore) restore.addEventListener("click", function () { setCollapsed(false); });
+
+  var tocCollapse = document.querySelector(".fd-toc-collapse");
+  var tocRestore = document.getElementById("fd-toc-restore");
+  function setTocCollapsed(collapsed) {
+    if (collapsed) docEl.dataset.tocCollapsed = "true";
+    else delete docEl.dataset.tocCollapsed;
+    try {
+      localStorage.setItem("fuma-toc", collapsed ? "collapsed" : "expanded");
+    } catch (e) {}
+    (collapsed ? tocRestore : tocCollapse).focus();
+    if (!collapsed) requestAnimationFrame(drawRail);
+  }
+  if (tocCollapse) tocCollapse.addEventListener("click", function () { setTocCollapsed(true); });
+  if (tocRestore) tocRestore.addEventListener("click", function () { setTocCollapsed(false); });
 
   /* Keep the active sidebar entry in view ------------------------------ */
 

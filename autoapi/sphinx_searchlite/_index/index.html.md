@@ -8,9 +8,9 @@ score itself, keyed so that section anchors survive incremental builds.
 
 ## Functions
 
-| [`collect_records`](#sphinx_searchlite._index.collect_records)(→ list[dict[str, str]])   | Return one record for the page plus one per addressable section and object description.   |
-|------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
-| [`setup_index`](#sphinx_searchlite._index.setup_index)(→ None)                           |                                                                                           |
+| [`collect_records`](#sphinx_searchlite._index.collect_records)(app, pagename, doctree) → list[dict[str, str]]   | Return one record for the page plus one per addressable section and object description.   |
+|-----------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| [`setup_index`](#sphinx_searchlite._index.setup_index)(app) → None                                              |                                                                                           |
 
 ## Module Contents
 

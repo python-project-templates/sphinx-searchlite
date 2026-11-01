@@ -281,10 +281,10 @@ This page contains auto-generated API reference documentation <sup>[1](#f1)</sup
 
 ## Functions
 
-| [`_build`](#test_searchlite._build)(→ pathlib.Path)   |    |
-|-------------------------------------------------------|----|
-| [`built`](#test_searchlite.built)(→ pathlib.Path)     |    |
-| [`records`](#test_searchlite.records)(→ list[dict])   |    |
+| [`_build`](#test_searchlite._build)(tmp_path_factory, conf, name) → pathlib.Path   |    |
+|------------------------------------------------------------------------------------|----|
+| [`built`](#test_searchlite.built)(tmp_path_factory) → pathlib.Path                 |    |
+| [`records`](#test_searchlite.records)(built) → list[dict]                          |    |
 
 ## Module Contents
 
@@ -530,9 +530,9 @@ drive `window.SearchLite` themselves.
 
 ## Functions
 
-| [`collect_records`](#sphinx_searchlite.collect_records)(→ list[dict[str, str]])   | Return one record for the page plus one per addressable section and object description.   |
-|-----------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
-| [`setup`](#sphinx_searchlite.setup)(→ dict[str, object])                          |                                                                                           |
+| [`collect_records`](#sphinx_searchlite.collect_records)(app, pagename, doctree) → list[dict[str, str]]   | Return one record for the page plus one per addressable section and object description.   |
+|----------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| [`setup`](#sphinx_searchlite.setup)(app) → dict[str, object]                                             |                                                                                           |
 
 ## Package Contents
 
@@ -563,9 +563,9 @@ score itself, keyed so that section anchors survive incremental builds.
 
 ## Functions
 
-| [`collect_records`](#sphinx_searchlite._index.collect_records)(→ list[dict[str, str]])   | Return one record for the page plus one per addressable section and object description.   |
-|------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
-| [`setup_index`](#sphinx_searchlite._index.setup_index)(→ None)                           |                                                                                           |
+| [`collect_records`](#sphinx_searchlite._index.collect_records)(app, pagename, doctree) → list[dict[str, str]]   | Return one record for the page plus one per addressable section and object description.   |
+|-----------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| [`setup_index`](#sphinx_searchlite._index.setup_index)(app) → None                                              |                                                                                           |
 
 ## Module Contents
 

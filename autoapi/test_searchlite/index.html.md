@@ -21,10 +21,10 @@
 
 ## Functions
 
-| [`_build`](#test_searchlite._build)(→ pathlib.Path)   |    |
-|-------------------------------------------------------|----|
-| [`built`](#test_searchlite.built)(→ pathlib.Path)     |    |
-| [`records`](#test_searchlite.records)(→ list[dict])   |    |
+| [`_build`](#test_searchlite._build)(tmp_path_factory, conf, name) → pathlib.Path   |    |
+|------------------------------------------------------------------------------------|----|
+| [`built`](#test_searchlite.built)(tmp_path_factory) → pathlib.Path                 |    |
+| [`records`](#test_searchlite.records)(built) → list[dict]                          |    |
 
 ## Module Contents
 

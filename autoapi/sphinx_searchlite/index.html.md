@@ -17,9 +17,9 @@ drive `window.SearchLite` themselves.
 
 ## Functions
 
-| [`collect_records`](#sphinx_searchlite.collect_records)(→ list[dict[str, str]])   | Return one record for the page plus one per addressable section and object description.   |
-|-----------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
-| [`setup`](#sphinx_searchlite.setup)(→ dict[str, object])                          |                                                                                           |
+| [`collect_records`](#sphinx_searchlite.collect_records)(app, pagename, doctree) → list[dict[str, str]]   | Return one record for the page plus one per addressable section and object description.   |
+|----------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| [`setup`](#sphinx_searchlite.setup)(app) → dict[str, object]                                             |                                                                                           |
 
 ## Package Contents
 
